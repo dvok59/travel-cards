@@ -18,7 +18,7 @@ namespace TravelCardsTests
         }
 
         /// <summary>
-        /// Тест с набором значений из спецификации
+        /// Test with collection from task specification.
         /// </summary>
         [TestMethod]
         public void SpecificationSortTest()
@@ -42,7 +42,7 @@ namespace TravelCardsTests
         }
 
         /// <summary>
-        /// Тест с пустым аргументом
+        /// Test for null argument.
         /// </summary>
         [ExpectedException(typeof (ArgumentNullException))]
         [TestMethod]
@@ -59,7 +59,7 @@ namespace TravelCardsTests
         }
 
         /// <summary>
-        /// Тест с пустой коллекцией
+        /// Test with empty collection.
         /// </summary>
         [TestMethod]
         public void EmptySortTest()
@@ -75,7 +75,7 @@ namespace TravelCardsTests
         }
 
         /// <summary>
-        /// Тест с единственным значением в коллекции
+        /// Test with a sole element in the collection.
         /// </summary>
         [TestMethod]
         public void SingleItemSortTest()
@@ -96,7 +96,7 @@ namespace TravelCardsTests
         }
 
         /// <summary>
-        /// Тест с заранее отсортированным списком
+        /// Test with presorted collection.
         /// </summary>
         [TestMethod]
         public void PresortedSortTest()
@@ -120,7 +120,7 @@ namespace TravelCardsTests
         }
 
         /// <summary>
-        /// Тест с отсортированным в обратном порядке списком
+        /// Test with inversely presorted collection.
         /// </summary>
         [TestMethod]
         public void InversePresortedSortTest()

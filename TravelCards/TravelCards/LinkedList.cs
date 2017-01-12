@@ -3,14 +3,21 @@
 namespace TravelCards
 {
     /// <summary>
-    /// Связанный список
+    /// Represents a linked collection of nodes.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class LinkedList<T>
     {
         #region Props
 
+        /// <summary>
+        /// First node of collection.
+        /// </summary>
         public Node<T> Head { get; private set; }
+
+        /// <summary>
+        /// Last node of collection.
+        /// </summary>
         public Node<T> Tail { get; private set; }
 
         #endregion
@@ -27,7 +34,7 @@ namespace TravelCards
         #region Methods
 
         /// <summary>
-        /// Добавить элемент в начало
+        /// Append node at the beginning of the collection.
         /// </summary>
         /// <param name="node"></param>
         public void AddFirst(Node<T> node)
@@ -44,7 +51,7 @@ namespace TravelCards
         }
 
         /// <summary>
-        /// Добавить элемент в конец
+        /// Append node at the end of the collection.
         /// </summary>
         /// <param name="node"></param>
         public void AddLast(Node<T> node)
@@ -61,7 +68,7 @@ namespace TravelCards
         }
 
         /// <summary>
-        /// Конверитровать в список (с содержимым элементов)
+        /// Creates a List of values.
         /// </summary>
         /// <returns></returns>
         public List<T> ToList()
@@ -79,9 +86,9 @@ namespace TravelCards
         }
 
         /// <summary>
-        /// Связать два списка
+        /// Concatenates two linked lists.
         /// </summary>
-        /// <param name="otherList">Привязываемый список</param>
+        /// <param name="otherList">List to be appended.</param>
         public void Concat(LinkedList<T> otherList)
         {
             if (Head == null)

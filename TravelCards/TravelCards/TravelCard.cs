@@ -1,18 +1,19 @@
 ﻿namespace TravelCards
 {
     /// <summary>
-    /// Карточка путешествия
+    /// Contains information about city or airport of departure and arrival.
     /// </summary>
     public struct TravelCard
     {
         #region Props
 
         /// <summary>
-        /// Пункт отправления
+        /// City or airport of departure.
         /// </summary>
         public string Departure { get; private set; }
 
         /// <summary>
+        /// City or airport of arrival.
         /// Пункт прибытия
         /// </summary>
         public string Arrival { get; private set; }

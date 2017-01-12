@@ -5,19 +5,19 @@ using System.Linq;
 namespace TravelCards
 {
     /// <summary>
-    /// Сортировщик карточек
+    /// Sorts unordered lists of Travel Cards.
     /// </summary>
     public class TravelCardSorter
     {
         /// <summary>
-        /// Словарь карточек
+        /// Hashtable of Travel Cards.
         /// </summary>
         private Dictionary<string, LinkedList<TravelCard>> _travelCards;
 
         /// <summary>
-        /// Отсортировать карточки
+        /// Sort given list of Travel Cards to make arrival and departure points match in consequent cards.
         /// </summary>
-        /// <param name="unsortedCards">Неотсортированный набор карточек</param>
+        /// <param name="unsortedCards">Unsorted list of Travel Cards.</param>
         /// <returns></returns>
         public IList<TravelCard> Sort(IEnumerable<TravelCard> unsortedCards)
         {
@@ -26,50 +26,52 @@ namespace TravelCards
                 = unsortedCards as TravelCard[] ?? unsortedCards.ToArray();
             if (!travelCards.Any()) return new List<TravelCard>();
 
-            //кладем все карточки в словарь, где ключом будет пункт отправления
+            //populate dictionary from the given list, where Departure is set to be the Key
             _travelCards = travelCards.ToDictionary(
                 travelCard => travelCard.Departure,
                 travelCard => new LinkedList<TravelCard>(new Node<TravelCard> { Next = null, Value = travelCard })
                 );
 
-            //рекурсивно связываем карточки
-            var initialCard = _travelCards.Values.First() //первый список карточек из словаря
-                .Tail.Value //последний элемент списка
-                .Departure;//пункт прибытия
+           //a card is needed to initate the sorting procedure (any card would really fit)
+            var initialCard = _travelCards.Values.First() //get the first list of travel cards from the dictionary
+                .Tail.Value //get the last element of this list
+                .Departure; //take is departure
 
+            //link cards recursively
             LinkCards(initialCard);
             
             return _travelCards.First().Value.ToList();
         }
 
         /// <summary>
-        /// Связываем карточки в словаре
+        /// Recursively links cards
         /// </summary>
-        /// <param name="key">Ключ начального элемента (подойдет любой ключ из словаря)</param>
+        /// <param name="key">Key for an element to initialize procedure.</param>
         private void LinkCards(string key)
         {
-            //если в словаре остался только один элемент, то это результирующий список карточек
+            //if there is only one item remaining in the dictionary, the recursion should be terminated, since this is the result
             if (_travelCards.Count == 1) return;
 
-            //получаем ключ для следующей по очереди карточки (или списка карточек)
-            //этот ключ - пункт назначения в последней карточке
+            //acquire key for the next in sequence travel card 
+            //this key is the arrival point from the final card of the current card list
             var nextKey = _travelCards[key].Tail.Value.Arrival;
             
-            //если этот ключ есть в словаре
             if (_travelCards.ContainsKey(nextKey))
             {
-                //добавляем карточки по этому ключу к предыдущему списку
+                //if next key is present in the dictionary
+                //append cards from this key to the current card list
                 _travelCards[key].Concat(_travelCards[nextKey]);
-                //убираем элемент по этому ключу из словаря
+                //remove the next key from the dictionary
                 _travelCards.Remove(nextKey);
-                //повторяем для обновленного списка
+                //next level of recursion
                 LinkCards(key);
             }
             else
             {
-                //если ключа нет в словаре, то, значит, найден последний элемент в последовательности
-                //берем любой другой ключ из оставшихся в словаре
-                LinkCards(_travelCards.Keys.First(s => s != key));
+                //if next key is not present in the dictionary
+                //then we have stumbled upon the very last card of the resulting sequence
+                //hence, any other key should be used 
+                LinkCards(_travelCards.Keys.FirstOrDefault(s => s != key));
             }
         }
        
